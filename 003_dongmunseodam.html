@@ -1637,7 +1637,12 @@ document.querySelectorAll('.drop-slot').forEach(slot => {
   });
   slot.addEventListener('click', () => {
     const selected = document.querySelector('.tile.selected');
-    if (!selected) return;
+    if (!selected) {
+      // 고를 타일이 없으면: 이미 채워진 칸을 눌러 타일을 되돌림
+      const si = parseInt(slot.dataset.index);
+      if (slots[si]) emptySlot(slot);
+      return;
+    }
     const slotIdx = parseInt(slot.dataset.index);
     if (slots[slotIdx] !== null) {
       const prevTile = document.querySelector(`.tile[data-char="${slots[slotIdx]}"]`);
@@ -1659,6 +1664,26 @@ document.querySelectorAll('.drop-slot').forEach(slot => {
 });
 
 }); // end window.load
+
+
+function emptySlot(slot) {
+  const slotIdx = parseInt(slot.dataset.index);
+  const ch = slots[slotIdx];
+  if (ch) {
+    // 같은 글자 타일이 여럿일 수 있으므로 '사용 중'인 타일을 정확히 되돌림
+    const back = Array.from(document.querySelectorAll('.tile'))
+      .find(t => t.dataset.char === ch && t.classList.contains('used'));
+    if (back) { back.classList.remove('used'); }
+    slots[slotIdx] = null;
+  }
+  slot.textContent = '';
+  slot.classList.remove('filled');
+  const numSpan = document.createElement('span');
+  numSpan.className = 'slot-num';
+  numSpan.textContent = slotIdx + 1;
+  slot.prepend(numSpan);
+  checkP1();
+}
 
 function checkP1() {
   const correct = slots[0]==='동' && slots[1]==='문' && slots[2]==='서' && slots[3]==='답';
