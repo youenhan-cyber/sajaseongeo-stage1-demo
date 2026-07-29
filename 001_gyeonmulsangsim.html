@@ -936,26 +936,56 @@
   background: linear-gradient(135deg,#FFD84D,#FFC107); color:#3A2E00;
   padding: 10px 40px 10px 14px; font-size:12.5px; font-weight:700; line-height:1.5;
 }
-.kakao-banner.show { display:block; }
 .kakao-banner b { text-decoration: underline; }
 .kakao-banner .kb-close {
   position:absolute; right:10px; top:50%; transform:translateY(-50%);
   background:rgba(0,0,0,0.12); border:none; border-radius:50%; width:22px; height:22px;
   font-size:13px; line-height:22px; color:#3A2E00; cursor:pointer;
 }
-.kb-open-chrome {
-  display:block; margin-top:8px; background:#1E3A5F; color:white; border:none;
-  border-radius:10px; padding:9px 14px; font-size:13px; font-weight:800;
-  font-family:'Noto Sans KR',sans-serif; cursor:pointer;
-}
+
+  .kakao-banner {
+    display:none; position:relative; z-index:3;
+    background: linear-gradient(135deg,#FFD84D,#FFC107); color:#3A2E00;
+    padding: 10px 40px 10px 14px; font-size:12.5px; font-weight:700; line-height:1.5; }
+  .kakao-banner.show { display:block; }
+  .kb-open-chrome {
+    display:block; margin-top:8px; background:#1E3A5F; color:white; border:none;
+    border-radius:10px; padding:9px 14px; font-size:13px; font-weight:800;
+    font-family:'Noto Sans KR',sans-serif; cursor:pointer; }
+  .kb-close {
+    position:absolute; right:10px; top:50%; transform:translateY(-50%);
+    background:rgba(0,0,0,0.12); border:none; border-radius:50%; width:22px; height:22px;
+    font-size:13px; line-height:22px; color:#3A2E00; cursor:pointer; }
+  .kk-dim {
+    display:none; position:fixed; inset:0; z-index:9998;
+    background:rgba(0,0,0,0.72); align-items:center; justify-content:center; padding:24px; }
+  .kk-dim.show { display:flex; }
+  .kk-box {
+    max-width:320px; width:100%; background:#fff; border-radius:20px;
+    padding:26px 22px; text-align:center; box-shadow:0 12px 40px rgba(0,0,0,0.35); }
 </style>
 </head>
 <body>
-
 <div class="kakao-banner" id="kakaoBanner">
-  🔔 소리(읽어주기/녹음)가 안 들리면 아래 버튼을 눌러주세요!
-  <button class="kb-open-chrome" onclick="openInChrome()">🌐 크롬으로 열기</button>
-  <button class="kb-close" onclick="closeKakaoBanner()">✕</button>
+🔊 카카오톡에서는 소리가 나지 않아요. 아래 버튼을 눌러주세요!
+<button class="kb-open-chrome" onclick="openInChrome()">🌐 크롬으로 열기</button>
+<button class="kb-close" onclick="closeKakaoBanner()">✕</button>
+</div>
+<div class="kk-dim" id="kkSoundPopup">
+  <div class="kk-box">
+    <div style="font-size:40px;margin-bottom:8px;">🔊</div>
+    <div style="font-size:17px;font-weight:900;color:#222;margin-bottom:8px;">
+      카카오톡에서는 소리가 나지 않아요</div>
+    <div style="font-size:13.5px;line-height:1.7;color:#555;margin-bottom:18px;">
+      읽어주기를 들으려면<br>크롬으로 열어주세요!</div>
+    <button onclick="openInChrome()" style="width:100%;padding:13px;border:none;
+      border-radius:12px;background:#1E3A5F;color:#fff;font-size:14.5px;font-weight:800;
+      font-family:inherit;cursor:pointer;margin-bottom:8px;">🌐 크롬으로 열기</button>
+    <button onclick="document.getElementById('kkSoundPopup').classList.remove('show');"
+      style="width:100%;padding:11px;border:none;border-radius:12px;background:#EEE;
+      color:#666;font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer;">
+      그냥 볼게요</button>
+  </div>
 </div>
 
 <header>
@@ -982,7 +1012,7 @@
   <div class="page-title">📝 1단계 · 글자 맞추기</div>
 
   <div class="card">
-    <p class="p1-instruction">섞인 글자를 드래그해서<br>올바른 순서로 놓아보세요!</p>
+    <p class="p1-instruction">섞인 글자를 눌러서<br>올바른 순서로 놓아보세요!</p>
 
     <div class="drop-zone" id="dropZone">
       <div class="drop-slot" id="slot0" data-index="0"><span class="slot-num">1</span></div>
@@ -2172,6 +2202,7 @@ function pickVoices() {
 }
 
 function toggleTTS() {
+  if (kkWarnSound()) { return; }
   const btn = document.getElementById('ttsBtn');
   if (ttsPlaying) {
     window.speechSynthesis.cancel();
@@ -2282,23 +2313,38 @@ function pickConfirm(el, correct) {
   }
 })();
 
-function checkKakaoInApp(){
+checkKakaoInApp();
+
+// ── 카카오톡 인앱 브라우저 안내 ──
+function isKakaoInApp(){
   const ua = navigator.userAgent || '';
-  const isAndroid = /android/i.test(ua);
-  if (isAndroid && sessionStorage.getItem('kakaoBannerClosed') !== '1') {
-    document.getElementById('kakaoBanner').classList.add('show');
+  return /KAKAOTALK/i.test(ua);
+}
+function checkKakaoInApp(){
+  if (isKakaoInApp() && sessionStorage.getItem('kakaoBannerClosed') !== '1') {
+    const b = document.getElementById('kakaoBanner');
+    if (b) b.classList.add('show');
   }
 }
 function closeKakaoBanner(){
-  document.getElementById('kakaoBanner').classList.remove('show');
-  sessionStorage.setItem('kakaoBannerClosed', '1');
+  const b = document.getElementById('kakaoBanner');
+  if (b) b.classList.remove('show');
+  try{ sessionStorage.setItem('kakaoBannerClosed','1'); }catch(e){}
 }
 function openInChrome(){
   const withoutScheme = location.href.replace(/^https?:\/\//, '');
-  const intentUrl = 'intent://' + withoutScheme + '#Intent;scheme=https;package=com.android.chrome;end';
-  location.href = intentUrl;
+  location.href = 'intent://' + withoutScheme + '#Intent;scheme=https;package=com.android.chrome;end';
 }
-checkKakaoInApp();
+let kkSoundShown = false;   // 페이지당 1회
+function kkWarnSound(){
+  if (!isKakaoInApp() || kkSoundShown) return false;
+  kkSoundShown = true;
+  const p = document.getElementById('kkSoundPopup');
+  if (p) p.classList.add('show');
+  return true;
+}
+window.addEventListener('load', checkKakaoInApp);
+
 </script>
 </body>
 </html>
