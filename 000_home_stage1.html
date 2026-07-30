@@ -326,6 +326,27 @@ header {
 </style>
 </head>
 <body>
+<script>function showPayPopup(){var p=document.getElementById('payPopup');if(p)p.style.display='flex';}</script>
+<div id="payPopup" style="display:none;position:fixed;inset:0;z-index:9999;
+     background:rgba(0,0,0,0.72);align-items:center;justify-content:center;padding:24px;">
+  <div style="max-width:340px;width:100%;background:#fff;border-radius:20px;
+       padding:28px 24px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.35);">
+    <div style="font-size:44px;margin-bottom:10px;">🔒</div>
+    <div style="font-size:19px;font-weight:900;margin-bottom:10px;color:#222;">
+      여기까지가 맛보기예요!</div>
+    <div style="font-size:14px;line-height:1.7;color:#555;margin-bottom:20px;">
+      1~3편은 누구나 무료로 풀 수 있어요.<br>
+      나머지 27편은 전체판에서 만날 수 있어요!</div>
+    <a href="https://instagram.com/urimal_tamheom" target="_blank" rel="noopener"
+       style="display:block;padding:14px;border-radius:12px;text-decoration:none;
+       background:linear-gradient(135deg,#F2BE4F,#E0A030);color:#3A2A10;
+       font-size:15px;font-weight:900;margin-bottom:10px;">전체판 보러 가기 →</a>
+    <button onclick="document.getElementById('payPopup').style.display='none';"
+       style="width:100%;padding:12px;border:none;border-radius:12px;background:#EEE;
+       color:#666;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;">
+      닫기</button>
+  </div>
+</div>
 <div class="embers"></div>
 
 <!-- 완전 정복 축하 배너 (맨 위 = 30단계를 모두 마치고 도착했을 때만 보임) -->
@@ -608,28 +629,5 @@ window.scrollTo(0, document.body.scrollHeight);
 setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 50);
 setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 200);
 </script>
-
-<div id="payPopup" style="display:none;position:fixed;inset:0;z-index:9999;
-     background:rgba(0,0,0,0.72);align-items:center;justify-content:center;padding:24px;">
-  <div style="max-width:340px;width:100%;background:#fff;border-radius:20px;
-       padding:28px 24px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.35);">
-    <div style="font-size:44px;margin-bottom:10px;">🔒</div>
-    <div style="font-size:19px;font-weight:900;margin-bottom:10px;color:#222;">
-      여기까지가 맛보기예요!</div>
-    <div style="font-size:14px;line-height:1.7;color:#555;margin-bottom:20px;">
-      1~3편은 누구나 무료로 풀 수 있어요.<br>
-      나머지 27편은 전체판에서 만날 수 있어요!</div>
-    <a href="https://instagram.com/urimal_tamheom" target="_blank" rel="noopener"
-       style="display:block;padding:14px;border-radius:12px;text-decoration:none;
-       background:linear-gradient(135deg,#F2BE4F,#E0A030);color:#3A2A10;
-       font-size:15px;font-weight:900;margin-bottom:10px;">전체판 보러 가기 →</a>
-    <button onclick="document.getElementById('payPopup').style.display='none';"
-       style="width:100%;padding:12px;border:none;border-radius:12px;background:#EEE;
-       color:#666;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;">
-      닫기</button>
-  </div>
-</div>
-<script>function showPayPopup(){document.getElementById('payPopup').style.display='flex';}</script>
-
 </body>
 </html>
