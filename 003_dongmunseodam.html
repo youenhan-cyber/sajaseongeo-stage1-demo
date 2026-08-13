@@ -851,6 +851,78 @@
     box-shadow: 0 4px 14px rgba(61,217,196,0.35);
   }
 
+  /* ── 다음 여정 안내 ── */
+  .next-journey {
+    background: linear-gradient(160deg, #1E3A5F, #2A5285);
+    color: #fff;
+    text-align: center;
+    padding: 24px 20px 20px;
+    border: none;
+  }
+  .nj-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: #A8E8DE;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .nj-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .nj-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    opacity: 0.9;
+    margin-bottom: 18px;
+  }
+  .nj-desc b { color: #6EE8D8; }
+  .nj-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .nj-item {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nj-item span { font-size: 17px; }
+  .btn-store {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #3DD9C4, #6EE8D8);
+    color: #1E3A5F;
+    font-size: 16px;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(61,217,196,0.4);
+    transition: transform 0.15s;
+  }
+  .btn-store:hover { transform: translateY(-2px); }
+  .nj-note {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 10px;
+  }
+
   .result-msg {
     text-align: center;
     font-size: 15px;
@@ -1456,6 +1528,25 @@
       <div class="milestone" id="ms1">🦋 50장<br><span>캐릭터 진화</span></div>
       <div class="milestone" id="ms2">👑 100장<br><span>사자성어 왕</span></div>
     </div>
+  </div>
+
+  <!-- 🎁 다음 여정 안내 -->
+  <div class="card next-journey">
+    <div class="nj-badge">여기까지가 체험판이에요</div>
+    <div class="nj-title">탐험은 계속됩니다</div>
+    <div class="nj-desc">
+      1단계에는 <b>30편의 사자성어</b>가 기다리고 있어요.<br>
+      매일 한 편씩, 한자 카드를 모아 레벨을 올려보세요.
+    </div>
+    <div class="nj-list">
+      <div class="nj-item"><span>🎙</span> 30편 전체 녹음 학습</div>
+      <div class="nj-item"><span>📖</span> 30편의 유래 웹툰과 음성</div>
+      <div class="nj-item"><span>🃏</span> 한자 카드 120장 수집</div>
+    </div>
+    <a class="btn btn-store" href="https://smartstore.naver.com/urimaltamheom/products/13720446392" target="_blank" rel="noopener">
+      1단계 전체 보러 가기 →
+    </a>
+    <div class="nj-note">네이버 스마트스토어로 이동합니다</div>
   </div>
 
   <button class="btn btn-restart" onclick="goHome()">🗺️ 모험 지도로 돌아가기</button>
